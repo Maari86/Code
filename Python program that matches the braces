@@ -1,0 +1,44 @@
+def match_braces(input_str):
+    # Initialize empty lists to track open and unmatched braces
+    open_braces = []
+    unmatched_braces = []
+
+    # Define a dictionary to map closing braces to their corresponding opening braces
+    brace_mapping = {')': '(', ']': '[', '}': '{'}
+
+    # Iterate through each character in the input string
+    for char in input_str:
+        if char in '([{':
+            # If it's an opening brace, append it to the open_braces list
+            open_braces.append(char)
+        elif char in ')]}':
+            # If it's a closing brace, check if there are open braces to match it
+            if open_braces:
+                # Pop the last open brace from the list
+                last_open_brace = open_braces.pop()
+                if last_open_brace != brace_mapping[char]:
+                    # If it doesn't match the current closing brace, append it to unmatched_braces
+                    unmatched_braces.append(last_open_brace)
+                    unmatched_braces.append(char)
+            else:
+                # If there are no open braces to match, append the current closing brace to unmatched_braces
+                unmatched_braces.append(char)
+        else:
+            # If the character is not a valid brace, print "INVALID INPUTS" and return
+            print("INVALID INPUTS")
+            return
+
+    # Append any remaining open braces to unmatched_braces
+    unmatched_braces.extend(open_braces)
+
+    # Concatenate the unmatched braces to the end of the input string
+    output_str = input_str + ''.join(unmatched_braces)
+
+    # Print the result
+    print(output_str)
+
+# Take input from the user
+input_str = input("Enter a string with braces: ")
+
+# Call the match_braces function with the input string
+match_braces(input_str)
